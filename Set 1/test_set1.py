@@ -15,7 +15,10 @@ class TestCode(unittest.TestCase):
 		self.assertEqual(find_correct_string(), "7b5a4215415d544115415d5015455447414c155c46155f4058455c5b523f") and self.assertEqual(single_byte_xor(find_correct_string()), "Now that the party is jumping")
 
 	def test_chall5(self):
-		self.assertEqual(repeating_key_xor("Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"), "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f")
+		self.assertEqual(repeating_key_xor("Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal", "ICE"), "0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f")
+
+	def test_chall6(self):
+		self.assertEqual(break_multikey_xor(), "Terminator X: Bring the noise")
 
 if __name__ == "__main__":
 	unittest.main()
