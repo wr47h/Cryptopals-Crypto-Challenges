@@ -1,6 +1,7 @@
 import base64
 import binascii
 from Crypto.Cipher import AES
+from collections import defaultdict
 
 def hex_to_base64(msg):
 	msg = bytearray.fromhex(msg)
@@ -179,5 +180,28 @@ def aes_in_ecb():
 	decoded = obj.decrypt(str)
 	print(decoded.decode('utf-8'))
 
+def repeated_block(buffer, block_size=16):
+	reps = defaultdict(lambda: -1)
+	for i in range(0, len(buffer), block_size):
+		block = bytes(buffer[i:i+block_size])
+		reps[block] += 1
+
+	return sum(reps.values())
+
+def detect_aes_in_ecb():
+	max_reps = 0
+	ecb_ciphertext = None
+
+	with open('chal8.txt', 'r') as f:
+		for l in f:
+			ciphertext = l.strip()
+			reps = repeated_block(bytearray(ciphertext, 'utf-8'))
+
+			if reps > max_reps:
+				reps = max_reps
+				ecb_ciphertext = ciphertext
+
+	return ecb_ciphertext
+
 if __name__ == "__main__":
-	aes_in_ecb()
+	pass
