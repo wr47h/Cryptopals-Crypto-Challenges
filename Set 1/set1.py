@@ -1,5 +1,6 @@
 import base64
 import binascii
+from Crypto.Cipher import AES
 
 def hex_to_base64(msg):
 	msg = bytearray.fromhex(msg)
@@ -169,5 +170,14 @@ def break_multikey_xor():
 	# print("KEY: {}\nTEXT: {}".format(final_string[2], final_string[0]))
 	return final_string[2]
 
+def aes_in_ecb():
+	with open('chal7.txt', 'r') as f:
+		str = f.read().replace('\n', '')
+
+	obj = AES.new(b"YELLOW SUBMARINE", AES.MODE_ECB)
+	str = base64.b64decode(str)
+	decoded = obj.decrypt(str)
+	print(decoded.decode('utf-8'))
+
 if __name__ == "__main__":
-	break_multikey_xor()
+	aes_in_ecb()
